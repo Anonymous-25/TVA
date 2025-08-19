@@ -4,7 +4,6 @@ import sqlite3
 import streamlit as st
 import sqlite3
 
-from chardet.cli.chardetect import description_of
 
 st.set_page_config(layout="wide")
 
@@ -512,3 +511,4 @@ def main():
 if __name__ == "__main__":
     init_db()
     main()
+
