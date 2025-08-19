@@ -6,6 +6,10 @@ import sqlite3
 
 import streamlit as st
 import requests, base64
+import toml
+
+# Load secrets.toml file manually
+config = toml.load(".streamlit/secrets.toml")
 
 # 🔐 Secrets from .toml
 GITHUB_TOKEN = st.secrets["GITHUB_TOKEN"]
