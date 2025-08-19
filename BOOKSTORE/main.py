@@ -7,6 +7,10 @@ import sqlite3
 
 st.set_page_config(layout="wide")
 
+from database import init_db, get_books, add_book, delete_book
+
+# ✅ App ke start me table create ho jaye
+init_db()
 
 import sqlite3
 import streamlit as st
@@ -511,5 +515,6 @@ def main():
 if __name__ == "__main__":
     init_db()
     main()
+
 
 
