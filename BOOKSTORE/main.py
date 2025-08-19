@@ -4,6 +4,41 @@ import sqlite3
 import streamlit as st
 import sqlite3
 
+import streamlit as st
+import requests, base64
+
+# 🔐 Secrets from .toml
+GITHUB_TOKEN = st.secrets["GITHUB_TOKEN"]
+GITHUB_REPO = st.secrets["GITHUB_REPO"]
+GITHUB_BRANCH = st.secrets["GITHUB_BRANCH"]
+
+def upload_to_github(file_path, file_content):
+    """
+    Uploads file to GitHub repository
+    """
+    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{file_path}"
+
+    # Encode content
+    encoded_content = base64.b64encode(file_content).decode("utf-8")
+
+    headers = {
+        "Authorization": f"token {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+
+    data = {
+        "message": f"Add {file_path}",
+        "content": encoded_content,
+        "branch": GITHUB_BRANCH
+    }
+
+    response = requests.put(url, headers=headers, json=data)
+
+    if response.status_code in [200, 201]:
+        return True
+    else:
+        print("❌ GitHub Upload Failed:", response.json())
+        return False
 
 st.set_page_config(layout="wide")
 
@@ -515,6 +550,7 @@ def main():
 if __name__ == "__main__":
     init_db()
     main()
+
 
 
 
